@@ -1,0 +1,21 @@
+---
+user:
+  ada:
+    exists: true
+    groups:
+      - analytics
+  alan:
+    exists: true
+    groups:
+      - analytics
+group:
+  analytics:
+    exists: true
+    gid: 4242
+file:
+  /var/analytics_datafiles:
+    exists: true
+    mode: "0770"
+    owner: "root"
+    group: "analytics"
+    filetype: "directory"

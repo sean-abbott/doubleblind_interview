@@ -1,0 +1,6 @@
+---
+- src: angstwad.docker_ubuntu
+- src: DavidWittman.filebeat
+- src: "https://github.com/sean-abbott/ansible-role-install_goss.git"
+  name: install_goss
+- src: "https://github.com/sean-abbott/run_remove_goss.git"

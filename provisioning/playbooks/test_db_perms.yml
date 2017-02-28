@@ -1,0 +1,103 @@
+# This playbook is a copy/paste of a playbook out of a role 'cause that was easier
+# than doing some kind of limit and running half the role. 
+# not really recommended for general consumption
+---
+- hosts: db
+  vars:
+    solr_dbuser_password: solr
+    finmason_dbuser_password: MasonFin
+  tasks:
+    - name: "ensure postgres owns finmason db"
+      become: yes
+      become_user: postgres
+      postgresql_db:
+        lc_collate: "en_US.utf8"
+        lc_ctype: "en_US.utf8"
+        name: "finmason"
+        owner: "postgres"
+        state: present
+        encoding: "UTF8"
+    
+    - name: "ensure finmason user"
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        db: "finmason"
+        name: "finmason"
+        password: "{{ finmason_dbuser_password }}"
+        state: present
+        priv: ALL
+      
+    - name: "ensure solr user"
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        db: "finmason"
+        name: "solr"
+        password: "{{ solr_dbuser_password }}"
+        state: present
+      
+    - name: "ensure postgres grant on finmason"
+      become: yes
+      become_user: postgres
+      postgresql_privs:
+        database: "finmason"
+        roles: "postgres"
+        privs: "ALL"
+        type: database
+    
+    - name: "run grants and stuff"
+      become: yes
+      become_user: postgres
+      shell: "{{ item }}"
+      with_items:
+        - 'psql -d finmason -c "CREATE SCHEMA IF NOT EXISTS finmason_app;"'
+        - 'psql -c "alter default privileges in schema finmason_app grant SELECT on tables TO PUBLIC;" finmason'
+    - name: "set finmason schema grant"
+      become: yes
+      become_user: postgres
+      postgresql_privs:
+        database: "finmason"
+        roles: "finmason"
+        privs: "ALL"
+        type: schema
+        objs: finmason_app
+    
+    - name: "set solr connect grant"
+      become: yes
+      become_user: postgres
+      postgresql_privs:
+        database: "finmason"
+        roles: "solr"
+        privs: "CONNECT"
+        type: database
+    
+    - name: "set solr schema grants"
+      become: yes
+      become_user: postgres
+      postgresql_privs:
+        database: "finmason"
+        roles: "solr"
+        privs: "USAGE"
+        type: schema
+        objs: finmason_app
+    
+    - name: "make sure finmason role has permission to flyway_schema_history"
+      become: yes
+      become_user: postgres
+      postgresql_privs:
+        database: "finmason"
+        roles: "finmason"
+        privs: "ALL"
+        type: "table"
+        objs: "flyway_schema_history"
+    
+    - name: "set search paths"
+      become: yes
+      become_user: postgres
+      shell: "{{ item }}"
+      with_items:
+        - "psql -d finmason -c 'ALTER USER solr SET search_path TO finmason_app;'"
+        - 'psql -d finmason -c "ALTER USER finmason SET search_path TO finmason_app;"'
+    
+    

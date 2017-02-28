@@ -1,0 +1,5 @@
+---
+- name: "check that data directories have been created"
+  hosts: db
+  roles:
+    - { role: "run_remove_goss", goss_file: "answer_key/analytics_data_dir.goss.yaml" }

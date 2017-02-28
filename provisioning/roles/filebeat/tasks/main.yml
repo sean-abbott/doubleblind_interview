@@ -1,0 +1,12 @@
+---
+- name: "add filebeat log forwarder"
+  include_role:
+    name: DavidWittman.filebeat
+  vars:
+    filebeat_config: "{{ lookup('template', 'filebeat_config.yml.j2')|from_yaml }}"
+    filebeat_version: "5.2.0"
+
+  # YELLOW using curl and localhost may not be ideal"
+- name: "ensure elasticsearch has filebeat template"
+  shell: "curl -XPUT 'http://{{ elasticsearch_host }}:9200/_template/filebeat' -d@/etc/filebeat/filebeat.template.json"
+

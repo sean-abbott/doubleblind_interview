@@ -1,0 +1,5 @@
+---
+- name: "add goss"
+  hosts: db
+  roles:
+    - install_goss

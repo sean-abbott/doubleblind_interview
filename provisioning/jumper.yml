@@ -1,0 +1,5 @@
+---
+- hosts: jumper
+  tasks:
+    - debug:
+        msg: "Nothing here yet"

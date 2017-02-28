@@ -1,0 +1,68 @@
+---
+- name: "handle missing python 2.7"
+  hosts: control
+  gather_facts: no
+  tasks:
+    - raw: sudo apt-get update -qq && sudo apt-get install -qq python2.7
+    - raw: sudo ln -sf /usr/bin/python2.7 /usr/bin/python
+
+- name: "install docker and docker py"
+  hosts: control
+  become: yes
+  roles:
+    - angstwad.docker_ubuntu
+
+  tasks:
+    - name: "add vagrant user to docker group"
+      user:
+        name: "vagrant"
+        groups: "docker"
+        append: "yes"
+
+    - name: "ensure srv directory"
+      file:
+        path: "/srv"
+        owner: vagrant
+        group: vagrant
+        state: directory
+
+- name: "Set up ELK stack"
+  hosts: control
+  tasks:
+    - name: "get elk docker compose repo"
+      git:
+        repo: "https://github.com/sean-abbott/docker-elk.git"
+        dest: "/srv/elk"
+
+    - name: "add required vm.max_map_count value"
+      become: yes
+      sysctl:
+        name: vm.max_map_count
+        value: 262144
+        state: present
+        reload: yes
+
+    - name: "start elk"
+      become: yes
+      docker_service:
+        project_src: "/srv/elk"
+        state: present
+
+- name: "add filebeat log forwarder"
+  hosts: control
+  become: yes
+  vars:
+    filebeat_config: "{{ lookup('file', 'files/filebeat_config.yml')|from_yaml }}"
+  pre_tasks:
+    - name: "show filebeat_config"
+      debug:
+        var: filebeat_config
+        verbosity: 1
+
+  roles:
+    - { role: DavidWittman.filebeat, filebeat_version: "5.2.0" }
+
+  post_tasks:
+    # YELLOW using curl and localhost may not be ideal"
+    - name: "ensure elasticsearch has filebeat template"
+      shell: "curl -XPUT 'http://localhost:9200/_template/filebeat' -d@/etc/filebeat/filebeat.template.json"

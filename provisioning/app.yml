@@ -1,0 +1,13 @@
+---
+- name: "handle missing python 2.7"
+  hosts: app
+  gather_facts: no
+  tasks:
+    - raw: sudo apt-get update -qq && sudo apt-get install -qq python2.7
+    - raw: sudo ln -sf /usr/bin/python2.7 /usr/bin/python
+
+- name: "install localized filebeat"
+  hosts: app
+  become: yes
+  roles:
+    - filebeat

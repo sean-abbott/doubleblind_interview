@@ -1,0 +1,125 @@
+---
+- hosts: desktop
+  gather_facts: no
+  tasks:
+    - raw: sudo apt-get update -qq && sudo apt-get install -qq python2.7
+    - raw: sudo ln -sf /usr/bin/python2.7 /usr/bin/python
+
+- hosts: desktop
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: "install desktop and vnc"
+      apt:
+        name: "{{ item }}"
+        state: installed
+      with_items:
+        - xfce4
+        - xfce4-goodies
+        - tightvncserver
+        - xrdp
+        - firefox
+
+    - name: "ensure vagrant vnc config dir"
+      file:
+        path: "/home/vagrant/.vnc"
+        owner: "vagrant"
+        group: "vagrant"
+        state: "directory"
+
+    - name: "configure vnc"
+      shell: "echo {{ vnc_password |default('password') }} | vncpasswd -f > /home/vagrant/.vnc/passwd"
+      
+
+    - name: "set vnc passwd perms"
+      file:
+        path: "/home/vagrant/.vnc/passwd"
+        owner: "vagrant"
+        group: "vagrant"
+        mode: "0600"
+        state: "file"
+
+    - name: "copy in .vnc/xstartup"
+      copy:
+        src: "files/dotvnc_xstartup"
+        dest: "/home/vagrant/.vnc/xstartup"
+        owner: "vagrant"
+        group: "vagrant"
+        mode: "0755"
+
+    - name: "copy in xrdp config"
+      template:
+        src: "templates/_etc_xrdp_xrdp.ini.j2"
+        dest: "/etc/xrdp/xrdp.ini"
+
+
+    - name: "create .Xauthority"
+      file:
+        path: "/home/vagrant/.Xauthority"
+        owner: "vagrant"
+        group: "vagrant"
+        state: "touch"
+
+    - name: "create .config"
+      file:
+        path: "/home/vagrant/.config"
+        owner: "vagrant"
+        group: "vagrant"
+        state: "directory"
+
+    - name: "copy in vncserver service"
+      template:
+        src: "templates/_etc_systemd_system_vncserver@.service.j2"
+        dest: "/etc/systemd/system/vncserver@.service"
+      notify:
+        - "reload systemd"
+
+    - name: "add simple chat ppa"
+      apt_repository:
+        repo: "ppa:impomezia/development"
+        state: "present"
+        update_cache: "yes"
+
+    - name: "install simple chat"
+      apt:
+        name: "{{ item }}"
+        state: "present"
+      with_items: 
+        - "schat2"
+        - "schatd2"
+        - "daemon"
+
+    - name: "start schatd2"
+      shell: "daemon -- schatd2"
+
+  handlers:
+    - name: "reload systemd"
+      systemd:
+        name: "vncserver@1.service"
+        enabled: "yes"
+        state: "started"
+        daemon_reload: "yes"
+
+- name: "add roles"
+  hosts: "desktop"
+  become: "yes"
+  roles:
+    - install_goss
+
+- name: "setup vagrant user"
+  hosts: "desktop"
+  become: "yes"
+  tasks:
+    - name: "copy in ssh keypair"
+      copy:
+        src: "files/vagrant_{{ item.name }}"
+        dest: "/home/vagrant/.ssh/{{ item.name }}"
+        mode: "{{ item.mode }}"
+        owner: "vagrant"
+        group: "vagrant"
+      with_items:
+        - name: "id_rsa"
+          mode: "0600"
+        - name: "id_rsa.pub"
+          mode: "0644"
+

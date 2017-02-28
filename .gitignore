@@ -1,0 +1,28 @@
+# vim swap files
+.*.swp
+
+# packer files that shouldn't be used
+*.box
+*.ova
+*.ovf
+packer_cache
+packer/output-*
+
+# vagrant files that shouldn't be used
+.vagrant
+*.log
+
+# config file that should not be shared
+user_config.yml
+
+# ansible files we don't need
+*.retry
+
+# big file
+*.tgz
+*.tar.gz
+
+# user-specific files
+user_config.yml
+local_config.yml
+local_ansible_vars.yml

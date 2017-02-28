@@ -1,0 +1,23 @@
+Hello!
+ 
+We'd like to invite you to a full interview here at FinMason's offices. The interview will last for about 5 hours. You'll meet most or all of the team, and go through both technical and non-technical interviews.
+ 
+My portion of the interview will be given on a computer.  The computer will be loaded with XFCE (a linux desktop), and will be screen shared with me while in another office. I'll give you 30 minutes to familiarize yourself with the machine (set up your preferred text editor, etc.), and then I'll give you a list of questions to choose from.  The questions will be targeted at linux systems administration, so please be familiar with and ready to use the following tools:
+* console editor of choice (vim,emacs, etc.)
+* basic user commands and permissions (i.e., be able to manipulate users, groups, and permissions on an ubuntu system)
+* ssh (client configuration, key generation, basic troubleshooting)
+* linux networking (i.e., ss or netstat, the ip tool, telnet, ping)
+* log reading and parsing (pagers such as less and more, cat, grep)
+* debian based package management (i.e., apt, apt-get, dpkg)
+ 
+I will give you a list of tasks and problems to choose from (including the problem domain), and you'll choose the ones you feel you're best at. My purpose here is to evaluate your ability to teach yourself a new skill.  If all of these skills are already familiar to you, please let me know something from our technology stack that is not so I can write up a test that uses that instead.
+ 
+After you've spent an hour or so on the familiar things, I will ask you to perform a task using a tool or language with which you are NOT familiar. This is because I want to observe your learning process. (How you approach a completely new technology.)
+ 
+Together, the hands on portion will take about 2 hours.
+ 
+During this entire time, I will want you to be as comfortable as possible during an interview. I am not interested in assessing how you perform "under pressure", but rather in how you perform when you're relaxed and comfortable. If there is anything I can do to help you be comfortable, I'd like to know ahead of time, please. I encourage you to ask as many questions as you need (I'll have a chat program set up so that you can talk to me while you're working, and I'll be right next door if you'd like to talk in person.)
+ 
+After the hands-on portion, you'll talk to the rest of the team.  Expect them to ask whiteboard thinking process questions (like the backup scenario I gave during the phone screen), behavioral questions (like these: http://www.popularinterviewquestions.info/2013/11/behavioral-technician-interview-questions-answers.html), and possibly white board logic puzzle type questions.
+ 
+<ask about availability and if they have any questions>
