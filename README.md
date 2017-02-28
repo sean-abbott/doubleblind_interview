@@ -17,13 +17,19 @@ Running
 
 Setup
 -----
-Before running vagrant up on anything, you'll want to make sure you have roles installed::
+You will need virtualbox, vagrant, and ansible installed.
 
+Before running vagrant up on anything, you'll want to make sure you have roles installed:
+
+```bash
     ansible-galaxy install --force -r role_requirements.yml
+```
 
-You'll also need to install the hostmanager vagrant plugin::
+You'll also need to install the hostmanager vagrant plugin:
 
+```bash
     vagrant plugin install vagrant-hostmanager
+```
 
 And it might be worth scanning this: https://www.vagrantup.com/docs/provisioning/ansible_intro.html
 
@@ -34,9 +40,11 @@ Single Box
 
 Run `vagrant up <boxname>` to bring up a single box.
 
-To run an ansible play book (for instance, a "test" playbook), run::
+To run an ansible play book (for instance, a "test" playbook), run:
 
+```bash
     ansible-playbook <box or group> -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory provisioning/playbook_name.yml
+```
 
 Purposes
 ========
@@ -45,4 +53,6 @@ Purposes
 * db: will /should have any and all databases installed on it
 * app: has application servers installed on it
 
-
+Problems (and workarounds)
+==========================
+* Directly from VNC, the candidate can't install things on the "desktop". You have to ssh localhost to be able to install.
