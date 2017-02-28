@@ -1,0 +1,20 @@
+---
+- name: "ensure authorized_keys is correct on servers"
+  hosts: "db:app:control"
+  roles:
+    - { role: "run_remove_goss", goss_file: "answer_key/vagrant_passwordless_ssh_servers.goss.yaml" }
+
+- name: "dynamically create server group"
+  hosts: "all"
+  tasks:
+    - name: "add hosts to servers group"
+      add_host:
+        hostname: "{{ item }}"
+        groups: "servers"
+      with_items: groups['all']
+      when: "ansible_hostname != 'desktop'"
+
+- name: "ensure passwordless ssh works for all servers"
+  hosts: "desktop"
+  roles:
+    - { role: "run_remove_goss", goss_file: "answer_key/vagrant_passwordless_ssh_desktop.goss.yaml" }
