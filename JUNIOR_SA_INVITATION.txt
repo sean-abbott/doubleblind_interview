@@ -1,6 +1,6 @@
 Hello!
  
-We'd like to invite you to a full interview here at FinMason's offices. The interview will last for about 5 hours. You'll meet most or all of the team, and go through both technical and non-technical interviews.
+We'd like to invite you to a full interview. The interview will last for about 5 hours. You'll meet most or all of the team, and go through both technical and non-technical interviews.
  
 My portion of the interview will be given on a computer.  The computer will be loaded with XFCE (a linux desktop), and will be screen shared with me while in another office. I'll give you 30 minutes to familiarize yourself with the machine (set up your preferred text editor, etc.), and then I'll give you a list of questions to choose from.  The questions will be targeted at linux systems administration, so please be familiar with and ready to use the following tools:
 * console editor of choice (vim,emacs, etc.)
