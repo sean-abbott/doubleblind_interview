@@ -1,0 +1,7 @@
+---
+- hosts: desktop
+  tasks:
+    - name: "start test by copyign task to desktop"
+      copy:
+        src: "TASK.md"
+        dest: "/home/vagrant/Desktop/passwordless_ssh.task"
