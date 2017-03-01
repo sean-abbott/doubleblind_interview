@@ -1,0 +1,5 @@
+---
+- name: "ensure goss is running"
+  hosts: "app"
+  roles:
+    - { role: "run_remove_goss", goss_file: "answer_key/gogs.goss.yaml" }

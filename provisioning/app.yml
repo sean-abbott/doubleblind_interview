@@ -13,9 +13,20 @@
     gogs_database_user: gogs
     gogs_database_password: gogs
     gogs_salt: saltysaltsalt
-    gogs_domain: git.example.com
+    gogs_domain: app.interview.vm
     gogs_database_uri: db.interview.vm:3306
+    gogs_logdir: /var/log/gogs
   roles:
     - install_goss
     - alvaroaleman.gogs
 
+- name: "add gogs admin user"
+  hosts: app
+  become: yes
+  become_user: gogs
+  tasks:
+    - name: "add admin user"
+      shell: "GOGS_CUSTOM=/srv/gogs/custom gogs admin create-user --name=gogsadmin --password=gogsadmin --email=gogsadmin@app.interview.vm --admin=true"
+
+    - name: "add vagrant user"
+      shell: "GOGS_CUSTOM=/srv/gogs/custom gogs admin create-user --name=vagrant --password=vagrant --email=vagrant@desktop.interview.vm"

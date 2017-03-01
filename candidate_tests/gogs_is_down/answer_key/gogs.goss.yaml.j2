@@ -1,0 +1,26 @@
+service:
+  gogs:
+    enabled: true
+    running: true
+user:
+  gogs:
+    exists: true
+    uid: 998
+    gid: 998
+    groups:
+    - gogs
+    home: /srv/gogs
+    shell: ""
+group:
+  gogs:
+    exists: true
+    gid: 998
+process:
+  gogs:
+    running: true
+port:
+  tcp6:3000:
+    listening: true
+    ip:
+      - '::'
+

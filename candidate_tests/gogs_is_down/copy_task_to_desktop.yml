@@ -1,0 +1,7 @@
+---
+- hosts: desktop
+  tasks:
+    - name: "start test by copying task to desktop"
+      copy:
+        src: "TASK.md"
+        dest: "/home/vagrant/Desktop/gogs_is_down.task"
