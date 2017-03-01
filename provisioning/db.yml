@@ -3,7 +3,8 @@
   hosts: db
   roles:
     - install_goss
-		- angstwad.docker_ubuntu
+    - angstwad.docker_ubuntu
+
   tasks:
     - name: "add vagrant user to docker group"
       user:
@@ -13,15 +14,15 @@
 
 - name: "set up mysql server with docker"
   hosts: "db"
-	become: yes
-	tasks:
-		- name: "get mysql image"
-			docker_image:
-				name: "mysql:5.7"
-				state: "present"
+  become: yes
+  tasks:
+    - name: "get mysql image"
+      docker_image:
+        name: "mysql:5.7"
+        state: "present"
 
-		- name: "start mysql"
-			docker_container:
+    - name: "start mysql"
+      docker_container:
         name: "gogs_mysql"
         image: "mysql:5.7"
         state: "started"
