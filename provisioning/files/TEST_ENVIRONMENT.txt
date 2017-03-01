@@ -1,0 +1,11 @@
+Hello!  Welcome to your interview.
+
+Here's a few notes about the environment that you're in. Some of this you may have already gone over in person; it's here for reference.
+
+You're on a remote desktop connection to a virtual machine. That machine is your desktop, and you are encouraged to do any setup you like to make yourself comfortable with it.  (Unfortunately, that does not include using a different window manager, but if you have any tools you like available you're welcome to install them.)
+
+Once you're done with that, feel free to explore a little.  There are three servers in this environment. A control machine that comes with a ELK stack installation, a "database" machine, and an application server. You can find their addresses in `/etc/hosts`.
+
+You should be able to ssh to those machines. Try it before you begin.
+
+During this interview, I'll be watching what you do via a screen share. This is not to be "big brother-ish", but rather, to get a sense of how you work. If there is anything I can do to make you more comfortable, let me know.  The "simple chat" window is connected to me. If you end up closing it, I'll probably pop in to make sure anything is ok. You are encouraged to ask any clarification questions you feel are necessary.  PLEASE ask questions.

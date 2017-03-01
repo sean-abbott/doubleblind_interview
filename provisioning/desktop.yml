@@ -123,3 +123,10 @@
         - name: "id_rsa.pub"
           mode: "0644"
 
+    - name: "copy environment text"
+      copy:
+        src: "files/TEST_ENVIRONMENT.txt"
+        dest: "/home/vagrant/Desktop"
+        owner: "vagrant"
+        group: "vagrant"
+
