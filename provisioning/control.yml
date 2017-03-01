@@ -66,3 +66,9 @@
     # YELLOW using curl and localhost may not be ideal"
     - name: "ensure elasticsearch has filebeat template"
       shell: "curl -XPUT 'http://localhost:9200/_template/filebeat' -d@/etc/filebeat/filebeat.template.json"
+
+- name: "add goss"
+  hosts: control
+  become: yes
+  roles:
+    - install_goss

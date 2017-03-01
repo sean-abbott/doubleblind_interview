@@ -9,3 +9,13 @@ Once you're done with that, feel free to explore a little.  There are three serv
 You should be able to ssh to those machines. Try it before you begin.
 
 During this interview, I'll be watching what you do via a screen share. This is not to be "big brother-ish", but rather, to get a sense of how you work. If there is anything I can do to make you more comfortable, let me know.  The "simple chat" window is connected to me. If you end up closing it, I'll probably pop in to make sure anything is ok. You are encouraged to ask any clarification questions you feel are necessary.  PLEASE ask questions.
+
+The password for the vagrant user on all boxes is still "vagrant"
+
+During all the tasks, please remember that I'm assessing your ability to work via the command line, so try and do everything via cli whenever possible.  Google+cli work is better than doing anything via GUI.
+
+***There are a couple of minor bugs/gotchas to worry about on this interview (which is a work in progress.)***
+
+First, you can't directly install anything via the remote desktop. I'm not sure why.  You'll need to ssh back to the desktop (i.e, ssh localhost) and log in to make installations/sudo work properly.
+
+Second, the connection back to the actual system this is running on seems a little flaky on occasion. Again, if that happens, we'll try and check in on you pretty rapidly.

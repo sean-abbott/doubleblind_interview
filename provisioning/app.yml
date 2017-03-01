@@ -11,3 +11,9 @@
   become: yes
   roles:
     - filebeat
+
+- name: "install goss"
+  hosts: app
+  become: yes
+  roles:
+    - install_goss
