@@ -5,7 +5,7 @@
   tasks:
     - name: "mange gogs custom ini file"
       lineinfile:
-        path: "/srv/gogs/custom/conf/app.ini"
+        name: "/srv/gogs/custom/conf/app.ini"
         regexp: "^HOST = db.interview.vm:3306$"
         line: "HOST = db.interview.vm:3308"
         state: "present"
