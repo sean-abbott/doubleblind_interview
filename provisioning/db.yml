@@ -1,6 +1,7 @@
 ---
 - name: "add goss and docker(py)"
   hosts: db
+  become: yes
   roles:
     - install_goss
     - angstwad.docker_ubuntu
