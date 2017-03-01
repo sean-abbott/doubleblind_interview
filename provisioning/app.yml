@@ -12,8 +12,16 @@
   roles:
     - filebeat
 
-- name: "install goss"
+- name: "install goss and gogs"
   hosts: app
   become: yes
+  vars:
+    gogs_database_name: gogs
+    gogs_database_user: gogs
+    gogs_database_password: gogs
+    gogs_domain: git.example.com
+    gogs_database_uri: db.interview.vm:3306
   roles:
     - install_goss
+    - alvaroaleman.gogs
+

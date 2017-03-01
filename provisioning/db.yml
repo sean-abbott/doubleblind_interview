@@ -1,5 +1,41 @@
 ---
-- name: "add goss"
+- name: "add goss and docker(py)"
   hosts: db
   roles:
     - install_goss
+		- angstwad.docker_ubuntu
+  tasks:
+    - name: "add vagrant user to docker group"
+      user:
+        name: "vagrant"
+        groups: "docker"
+        append: "yes"
+
+- name: "set up mysql server with docker"
+  hosts: "db"
+	become: yes
+	tasks:
+		- name: "get mysql image"
+			docker_image:
+				name: "mysql:5.7"
+				state: "present"
+
+		- name: "start mysql"
+			docker_container:
+        name: "gogs_mysql"
+        image: "mysql:5.7"
+        state: "started"
+        restart_policy: "unless-stopped"
+        published_ports: "3306:3306"
+        log_driver: "syslog"
+        env:
+          MYSQL_ROOT_PASSWORD: "mysql_root"
+          MYSQL_DATABASE: "gogs"
+          MYSQL_USER: "gogs"
+          MYSQL_PASSWORD: "gogs"
+
+- name: "install localized filebeat"
+  hosts: app
+  become: yes
+  roles:
+    - filebeat
