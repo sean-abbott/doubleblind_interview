@@ -1,11 +1,4 @@
 ---
-- name: "handle missing python 2.7"
-  hosts: control
-  gather_facts: no
-  tasks:
-    - raw: sudo apt-get update -qq && sudo apt-get install -qq python2.7
-    - raw: sudo ln -sf /usr/bin/python2.7 /usr/bin/python
-
 - name: "install docker and docker py"
   hosts: control
   become: yes
@@ -64,6 +57,10 @@
 
   post_tasks:
     # YELLOW using curl and localhost may not be ideal"
+    - wait_for:
+        port: 9200
+        delay: 10
+
     - name: "ensure elasticsearch has filebeat template"
       shell: "curl -XPUT 'http://localhost:9200/_template/filebeat' -d@/etc/filebeat/filebeat.template.json"
 
