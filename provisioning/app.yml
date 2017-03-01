@@ -16,6 +16,8 @@
     gogs_domain: app.interview.vm
     gogs_database_uri: db.interview.vm:3306
     gogs_logdir: /var/log/gogs
+    gogs_version: 0.9.113
+    gogs_install_dir: /opt/gogs
   roles:
     - install_goss
     - alvaroaleman.gogs
@@ -24,9 +26,15 @@
   hosts: app
   become: yes
   become_user: gogs
+  vars:
+    gogs_version: 0.9.113
+    gogs_install_dir: /opt/gogs
   tasks:
+    - set_fact:
+        gogs_path: "{{ gogs_install_dir }}/{{ gogs_version }}/"
+
     - name: "add admin user"
-      shell: "GOGS_CUSTOM=/srv/gogs/custom gogs admin create-user --name=gogsadmin --password=gogsadmin --email=gogsadmin@app.interview.vm --admin=true"
+      shell: "PATH=$PATH:{{ gogs_path }} GOGS_CUSTOM=/srv/gogs/custom gogs admin create-user --name=gogsadmin --password=gogsadmin --email=gogsadmin@app.interview.vm --admin=true"
 
     - name: "add vagrant user"
-      shell: "GOGS_CUSTOM=/srv/gogs/custom gogs admin create-user --name=vagrant --password=vagrant --email=vagrant@desktop.interview.vm"
+      shell: "PATH=$PATH:{{ gogs_path }} GOGS_CUSTOM=/srv/gogs/custom gogs admin create-user --name=vagrant --password=vagrant --email=vagrant@desktop.interview.vm"
