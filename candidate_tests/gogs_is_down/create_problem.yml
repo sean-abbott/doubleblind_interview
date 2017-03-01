@@ -6,7 +6,7 @@
     - name: "mange gogs custom ini file"
       lineinfile:
         path: "/srv/gogs/custom/conf/app.ini"
-        regex: "^HOST = db.interview.vm:3306$"
+        regexp: "^HOST = db.interview.vm:3306$"
         line: "HOST = db.interview.vm:3308"
         state: "present"
       notify: "restart gogs"
